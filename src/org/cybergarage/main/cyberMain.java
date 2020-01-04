@@ -41,6 +41,7 @@ class cyberMain{
             @Override
             public void deviceNotifyReceived(SSDPPacket packet) {
                 log.i(TAG + "Got Notification from device, remoteAddress is" + packet.getRemoteAddress());
+                log.i(packet.toString());
             }
         });
     }
@@ -51,6 +52,7 @@ class cyberMain{
             @Override
             public void deviceSearchResponseReceived(SSDPPacket packet) {
                 log.i(TAG + "A new device was searched, remoteAddress is" + packet.getRemoteAddress());
+                log.i(packet.toString());
             }
         });
     }
@@ -89,10 +91,9 @@ class cyberMain{
         });
     }
 
-    void Play()
+    void Play(String transportURI)
     {
         // 实例ID
-        String transportURI = "url";
         String instanceID = "0";
         // 播放视频地址
         String currentURI = "http://hc.yinyuetai.com/uploads/videos/common/026E01578953FD0EF0E47204247B5D13.flv?sc=2d17ae37a9186da6&br=780&vid=2693509&aid=623&area=US&vst=2";
@@ -135,9 +136,9 @@ class cyberMain{
     {
         cyberMain c = new cyberMain();
         c.Init();
-        c.Listen();
+        // c.Listen();
         c.Search();
-        c.Request();
+        //c.Request();
 
     }
 }
