@@ -342,8 +342,7 @@ public class ControlPoint implements HTTPRequestListener
 		return (getDevice(name) != null) ? true : false;
 	}
 
-	private void removeDevice(Node rootNode)
-	{
+	private void removeDevice(Node rootNode) throws MalformedURLException {
 		// Thanks for Oliver Newell (2004/10/16)
 		// Invoke device removal listener prior to actual removal so Device node 
 		// remains valid for the duration of the listener (application may want
@@ -361,21 +360,18 @@ public class ControlPoint implements HTTPRequestListener
 		}
 	}
 
-	protected void removeDevice(Device dev)
-	{
+	protected void removeDevice(Device dev) throws MalformedURLException {
 		if (dev == null)
 			return;
 		removeDevice(dev.getRootNode());
 	}
 	
-	protected void removeDevice(String name)
-	{
+	protected void removeDevice(String name) throws MalformedURLException {
 		Device dev = getDevice(name);
 		removeDevice(dev);
 	}
 
-	private void removeDevice(SSDPPacket packet)
-	{
+	private void removeDevice(SSDPPacket packet) throws MalformedURLException {
 		if (packet.isByeBye() == false)
 			return;
 		String usn = packet.getUSN();
@@ -390,8 +386,7 @@ public class ControlPoint implements HTTPRequestListener
 	private Disposer deviceDisposer;
 	private long expiredDeviceMonitoringInterval;
 	
-	public void removeExpiredDevices()
-	{
+	public void removeExpiredDevices() throws MalformedURLException {
 		DeviceList devList = getDeviceList();
 		int devCnt = devList.size();
 		Device dev[] = new Device[devCnt];
@@ -504,8 +499,7 @@ public class ControlPoint implements HTTPRequestListener
 		deviceChangeListenerList.remove(listener);
 	}		
 
-	public void performAddDeviceListener( Device dev )
-	{
+	public void performAddDeviceListener( Device dev ) throws MalformedURLException {
 		int listenerSize = deviceChangeListenerList.size();
 		for (int n=0; n<listenerSize; n++) {
 			DeviceChangeListener listener = (DeviceChangeListener)deviceChangeListenerList.get(n);
@@ -513,8 +507,7 @@ public class ControlPoint implements HTTPRequestListener
 		}
 	}
 
-	public void performRemoveDeviceListener( Device dev )
-	{
+	public void performRemoveDeviceListener( Device dev ) throws MalformedURLException {
 		int listenerSize = deviceChangeListenerList.size();
 		for (int n=0; n<listenerSize; n++) {
 			DeviceChangeListener listener = (DeviceChangeListener)deviceChangeListenerList.get(n);
@@ -526,8 +519,7 @@ public class ControlPoint implements HTTPRequestListener
 	//	SSDPPacket
 	////////////////////////////////////////////////
 	
-	public void notifyReceived(SSDPPacket packet)
-	{
+	public void notifyReceived(SSDPPacket packet) throws MalformedURLException {
 		if (packet.isRootDevice() == true) {
 			if (packet.isAlive() == true){
 				addDevice(packet);

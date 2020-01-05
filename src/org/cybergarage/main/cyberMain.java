@@ -8,6 +8,8 @@ import org.cybergarage.upnp.device.SearchResponseListener;
 import org.cybergarage.upnp.ssdp.SSDPPacket;
 import org.cybergarage.util.Log;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 class cyberMain{
@@ -35,7 +37,7 @@ class cyberMain{
         }).start();
     }
 
-    void Listen()
+    void NotifyListen()
     {
         controlPoint.addNotifyListener(new NotifyListener() {
             @Override
@@ -46,7 +48,7 @@ class cyberMain{
         });
     }
 
-    void Respone()
+    void ResponeListen()
     {
         controlPoint.addSearchResponseListener(new SearchResponseListener() {
             @Override
@@ -57,33 +59,23 @@ class cyberMain{
         });
     }
 
-    void Change(){
-        controlPoint.addDeviceChangeListener(new DeviceChangeListener() {
-            @Override
-            public void deviceRemoved(Device device) {
-                log.i(TAG + "Device was removed, device name: " + device.getFriendlyName());
-            }
-
-            @Override
-            public void deviceAdded(Device device) {
-                log.i(TAG + "Device was added, device name:" +  device.getFriendlyName());
-            }
-        });
-    }
-
     void Request()
     {
         controlPoint.addDeviceChangeListener(new DeviceChangeListener() {
             @Override
-            public void deviceRemoved(Device device) {
+            public void deviceRemoved(Device device) throws MalformedURLException {
+                log.i(TAG + " deviceRemoved " + device.getDeviceType());
+                ShowAll();
                 if ("urn:schemas-upnp-org:device:MediaRenderer:1".equals(device.getDeviceType())) {
                     deviceList.remove(device);
                 }
             }
 
             @Override
-            public void deviceAdded(Device device) {
+            public void deviceAdded(Device device) throws MalformedURLException {
                 // 判断是否为DMR
+                log.i(TAG + " deviceAdded " + device.getDeviceType());
+                ShowAll();
                 if ("urn:schemas-upnp-org:device:MediaRenderer:1".equals(device.getDeviceType())) {
                     deviceList.add(device);
                 }
@@ -120,6 +112,21 @@ class cyberMain{
         }
     }
 
+    void ShowAll() throws MalformedURLException {
+        log.i("=========================");
+        for (int i = 0; i < deviceList.size(); i++) {
+            // 设备描述文档
+            Device device = deviceList.getDevice(i);
+            String locationUrl = device.getLocation();
+            // 获取服务
+            Service service = device.getService("urn:schemas-upnp-org:service:AVTransport:1");
+            URL url = new URL(locationUrl);
+            // SDD
+            String sddUrl = url.getHost() + url.getPort() + service.getSCPDURL();
+            log.i(TAG + sddUrl);
+        }
+    }
+
     void Scanner()
     {
         int arr[] = new int[10];
@@ -132,13 +139,12 @@ class cyberMain{
         }
     }
 
-    public static void main(String argv[])
-    {
+    public static void main(String argv[]) throws MalformedURLException {
         cyberMain c = new cyberMain();
         c.Init();
-        // c.Listen();
+        c.NotifyListen();
+        c.ResponeListen();
+        c.Request();
         c.Search();
-        //c.Request();
-
     }
 }

@@ -135,7 +135,9 @@ public class SSDPNotifySocket extends HTTPMUSocket implements Runnable
 			}
 			//TODO Must be performed on a different Thread in order to prevent UDP packet losses.
 			if (ctrlPoint != null)
-				ctrlPoint.notifyReceived(packet); 
+				try {
+					ctrlPoint.notifyReceived(packet);
+				} catch (Exception e) {}
 		}
 	}
 	

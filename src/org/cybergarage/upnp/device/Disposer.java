@@ -58,7 +58,11 @@ public class Disposer extends ThreadCore
 			try {
 				Thread.sleep(monitorInterval);
 			} catch (InterruptedException e) {}
-			ctrlp.removeExpiredDevices();
+			try {
+				ctrlp.removeExpiredDevices();
+			} catch (Exception e) {
+
+			}
 			//ctrlp.print();
 		}
 	}

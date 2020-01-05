@@ -20,8 +20,10 @@ package org.cybergarage.upnp.device;
 
 import org.cybergarage.upnp.Device;
 
+import java.net.MalformedURLException;
+
 public interface DeviceChangeListener
 {
-	public void deviceAdded( Device dev );
-	public void deviceRemoved( Device dev );
+	public void deviceAdded( Device dev ) throws MalformedURLException;
+	public void deviceRemoved( Device dev ) throws MalformedURLException;
 }
