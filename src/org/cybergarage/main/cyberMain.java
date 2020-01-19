@@ -4,6 +4,7 @@ package org.cybergarage.main;
 import org.cybergarage.upnp.*;
 import org.cybergarage.upnp.device.DeviceChangeListener;
 import org.cybergarage.upnp.device.NotifyListener;
+import org.cybergarage.upnp.event.EventListener;
 import org.cybergarage.upnp.device.SearchResponseListener;
 import org.cybergarage.upnp.ssdp.SSDPPacket;
 import org.cybergarage.util.Log;
@@ -125,6 +126,32 @@ class cyberMain{
             String sddUrl = url.getHost() + url.getPort() + service.getSCPDURL();
             log.i(TAG + sddUrl);
         }
+    }
+
+    void Subscribe(int devIdx)
+    {
+        Device device = deviceList.getDevice(devIdx);
+        // 获取服务
+        Service service = device.getService("urn:schemas-upnp-org:service:AVTransport:1");
+        boolean ret = controlPoint.subscribe(service);
+        if (ret) {
+            // 订阅成功
+            log.i(TAG + device.getLocation() + " succ");
+        } else {
+            // 订阅失败
+            log.i(TAG + device.getLocation() + " fail");
+        }
+    }
+
+    void EventListen()
+    {
+        controlPoint.addEventListener(new EventListener() {
+            @Override
+            public void eventNotifyReceived(String uuid, long seq, String varName, String value){
+                // 事件回调
+                log.i("addEvent");
+            }
+        });
     }
 
     void Scanner()
