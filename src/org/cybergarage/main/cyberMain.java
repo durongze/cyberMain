@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.*;
 
 class cyberMain{
-    DeviceList deviceList = new DeviceList();
+    DeviceList deviceList = null;
     ControlPoint controlPoint = new ControlPoint();
     String TAG = "cyberMain";
     Log log = new Log();
@@ -30,6 +30,7 @@ class cyberMain{
 
     void Search()
     {
+        deviceList = controlPoint.getDeviceList();
         new Thread(new Runnable() {
             public void run() {
                 // controlPoint.start();
@@ -43,7 +44,7 @@ class cyberMain{
         controlPoint.addNotifyListener(new NotifyListener() {
             @Override
             public void deviceNotifyReceived(SSDPPacket packet) {
-                log.i(TAG + "Got Notification from device, remoteAddress is" + packet.getRemoteAddress());
+                log.i(TAG + " Got Notification from device, remoteAddress is " + packet.getRemoteAddress());
                 log.i(packet.toString());
             }
         });
@@ -54,8 +55,9 @@ class cyberMain{
         controlPoint.addSearchResponseListener(new SearchResponseListener() {
             @Override
             public void deviceSearchResponseReceived(SSDPPacket packet) {
-                log.i(TAG + "A new device was searched, remoteAddress is" + packet.getRemoteAddress());
+                log.i(TAG + "A new device was searched, remoteAddress is " + packet.getRemoteAddress());
                 log.i(packet.toString());
+                controlPoint.print();
             }
         });
     }
@@ -171,7 +173,7 @@ class cyberMain{
         c.Init();
         c.NotifyListen();
         c.ResponeListen();
-        c.Request();
+
         c.Search();
     }
 }

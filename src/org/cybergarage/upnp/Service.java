@@ -914,4 +914,9 @@ public class Service
 	{
 		return userData;
 	}
+
+	public void print() {
+		Debug.message(getSID());
+	}
+
 }

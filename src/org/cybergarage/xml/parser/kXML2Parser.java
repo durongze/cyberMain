@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 
 import org.cybergarage.xml.Node;
 import org.cybergarage.xml.ParserException;
-// import org.kxml2.io.KXmlParser;
+import org.kxml2.io.KXmlParser;
 
 public class kXML2Parser extends org.cybergarage.xml.Parser
 {
@@ -43,7 +43,7 @@ public class kXML2Parser extends org.cybergarage.xml.Parser
 	{
 		Node rootNode = null;
 		Node currNode = null;
-		/*
+		
 		try {
 			InputStreamReader inReader = new InputStreamReader(inStream);
 			KXmlParser xpp = new KXmlParser();
@@ -89,7 +89,7 @@ public class kXML2Parser extends org.cybergarage.xml.Parser
 		catch (Exception e) {
 			throw new ParserException(e);
 		}
-		*/
+		
 		return rootNode;
 	}
 	

@@ -2265,6 +2265,22 @@ public class Device implements org.cybergarage.http.HTTPRequestListener,
 		}
 	}
 
+	public void print(){
+		ServiceList serviceList = getServiceList();
+		int serviceCnt = serviceList.size();
+		for (int n = 0; n < serviceCnt; n++) {
+			Service service = serviceList.getService(n);
+			service.print();
+		}
+
+		DeviceList childDeviceList = getDeviceList();
+		int childDeviceCnt = childDeviceList.size();
+		for (int n = 0; n < childDeviceCnt; n++) {
+			Device childDevice = childDeviceList.getDevice(n);
+			childDevice.print();
+		}
+	}
+
 	// //////////////////////////////////////////////
 	// userData
 	// //////////////////////////////////////////////

@@ -104,7 +104,7 @@ public class ControlPoint implements HTTPRequestListener
 	private final static int DEFAULT_EXPIRED_DEVICE_MONITORING_INTERVAL = 60;
 	
 	private final static String DEFAULT_EVENTSUB_URI = "/evetSub";
-	
+
 	////////////////////////////////////////////////
 	//	Member
 	////////////////////////////////////////////////
@@ -136,6 +136,7 @@ public class ControlPoint implements HTTPRequestListener
 	////////////////////////////////////////////////
 
 	public ControlPoint(int ssdpPort, int httpPort,InetAddress[] binds){
+		Debug.on();
 		ssdpNotifySocketList = new SSDPNotifySocketList(binds);
 		ssdpSearchResponseSocketList = new SSDPSearchResponseSocketList(binds);
 		
@@ -153,11 +154,13 @@ public class ControlPoint implements HTTPRequestListener
 	
 	public ControlPoint(int ssdpPort, int httpPort){
 		this(ssdpPort,httpPort,null);
+		Debug.on();
 	}
 
 	public ControlPoint()
 	{
 		this(DEFAULT_SSDP_PORT, DEFAULT_EVENTSUB_PORT);
+		Debug.on();
 	}
 
 	public void finalize()
@@ -262,8 +265,10 @@ public class ControlPoint implements HTTPRequestListener
 			Parser parser = UPnP.getXMLParser();
 			Node rootNode = parser.parse(locationUrl);
 			Device rootDev = getDevice(rootNode);
-			if (rootDev == null)
+			if (rootDev == null) {
+				Debug.warning(" rootDev is null");
 				return;
+			}
 			rootDev.setSSDPPacket(ssdpPacket);
 			addDevice(rootNode);
 
@@ -520,11 +525,14 @@ public class ControlPoint implements HTTPRequestListener
 	////////////////////////////////////////////////
 	
 	public void notifyReceived(SSDPPacket packet) throws MalformedURLException {
+		Debug.message(" isRootDev " + packet.isRootDevice() + " isAlive " + packet.isAlive());
 		if (packet.isRootDevice() == true) {
 			if (packet.isAlive() == true){
 				addDevice(packet);
 			}else if (packet.isByeBye() == true){ 
 				removeDevice(packet);
+			}else{
+				// Debug.message("searchResponseReceived " + packet.toString());
 			}
 		}
 		performNotifyListener(packet);
@@ -532,8 +540,10 @@ public class ControlPoint implements HTTPRequestListener
 
 	public void searchResponseReceived(SSDPPacket packet)
 	{
+		Debug.message("searchResponseReceived " + packet.isRootDevice());
 		if (packet.isRootDevice() == true)
 			addDevice(packet);
+		// print();
 		performSearchResponseListener(packet);
 	}
 
@@ -979,12 +989,14 @@ public class ControlPoint implements HTTPRequestListener
 	
 	public void print()
 	{
+		Debug.on();
 		DeviceList devList = getDeviceList();
 		int devCnt = devList.size();
 		Debug.message("Device Num = " + devCnt);
 		for (int n=0; n<devCnt; n++) {
 			Device dev = devList.getDevice(n);
 			Debug.message("[" + n + "] " + dev.getFriendlyName() + ", " + dev.getLeaseTime() + ", " + dev.getElapsedTime());
+			dev.print();
 		}		
 	}
 }

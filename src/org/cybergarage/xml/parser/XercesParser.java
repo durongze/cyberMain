@@ -26,7 +26,7 @@ import java.io.*;
 
 import org.w3c.dom.*;
 import org.xml.sax.*;
-// import org.apache.xerces.parsers.DOMParser;
+import org.apache.xerces.parsers.DOMParser;
 
 import org.cybergarage.xml.*;
 
@@ -109,7 +109,7 @@ public class XercesParser extends org.cybergarage.xml.Parser
 	public org.cybergarage.xml.Node parse(InputStream inStream) throws ParserException
 	{
 		org.cybergarage.xml.Node root = null;
-		/*
+		
 		try {
 			DOMParser parser = new DOMParser();
 			InputSource inSrc = new InputSource(inStream);
@@ -131,7 +131,7 @@ public class XercesParser extends org.cybergarage.xml.Parser
 		catch (Exception e) {
 			throw new ParserException(e);
 		}
-		*/
+		
 		return root;
 	}
 	

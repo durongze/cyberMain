@@ -17,6 +17,8 @@ package org.cybergarage.xml.parser;
 
 import java.io.*;
 
+import org.xmlpull.v1.*;
+
 import org.cybergarage.xml.*;
 
 public class XmlPullParser extends org.cybergarage.xml.Parser
@@ -33,15 +35,17 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 	//	parse
 	////////////////////////////////////////////////
 
-	public Node parse(XmlPullParser xpp, InputStream inStream) throws ParserException
+	public Node parse(org.xmlpull.v1.XmlPullParser xpp, InputStream inStream) throws ParserException
 	{
 		Node rootNode = null;
 		Node currNode = null;
-		/*
 		try {
-			//InputStreamReader inReader = new InputStreamReader(inStream);
-			//xpp.setInput(inReader);
-			xpp.setInput(inStream, null);
+			// InputStreamReader inReader = new InputStreamReader(inStream);
+			Reader reader = null;
+			String input = null;
+			InputStream inputStream = new ByteArrayInputStream(input.getBytes()); // Conversion of InputStream to Reader
+			reader = new InputStreamReader(inStream, "UTF-8");
+			xpp.setInput(reader);
 			int eventType = xpp.getEventType();
 			while (eventType != org.xmlpull.v1.XmlPullParser.END_DOCUMENT) {
 				switch (eventType) {
@@ -91,14 +95,12 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 		catch (Exception e) {
 			throw new ParserException(e);
 		}
-		*/
 		return rootNode;
 	}
 
 	public Node parse(InputStream inStream) throws ParserException
 	{
 		Node rootNode = null;
-		/*
 		try {
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);
@@ -108,7 +110,6 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 		catch (Exception e) {
 			throw new ParserException(e);
 		}
-		*/
 		return rootNode;
 	}
 	
