@@ -91,7 +91,14 @@ class cyberMain{
         // 实例ID
         String instanceID = "0";
         // 播放视频地址
-        String currentURI = "http://hc.yinyuetai.com/uploads/videos/common/026E01578953FD0EF0E47204247B5D13.flv?sc=2d17ae37a9186da6&br=780&vid=2693509&aid=623&area=US&vst=2";
+        String currentURI = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+        String ccvt1 = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8";
+        String ccvt3 = "http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8";
+        String ccvt5 = "http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
+        String ccvt6 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
+        String aomen = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
+        String smburl = "smb://MY-PHONE/123/L1eLwX3v.mp4";
+        String smbip = "smb://192.168.137.1/123/L1eLwX3v.mp4";
         Device device = deviceList.getDevice(0);
         // 获取服务
         Service service = device.getService("urn:schemas-upnp-org:service:AVTransport:1");
