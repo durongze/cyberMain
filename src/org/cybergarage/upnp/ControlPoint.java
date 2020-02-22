@@ -543,7 +543,7 @@ public class ControlPoint implements HTTPRequestListener
 		Debug.message("searchResponseReceived " + packet.isRootDevice());
 		if (packet.isRootDevice() == true)
 			addDevice(packet);
-		// print();
+		print();
 		performSearchResponseListener(packet);
 	}
 
