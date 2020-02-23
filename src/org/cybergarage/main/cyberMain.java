@@ -14,6 +14,15 @@ import java.net.URL;
 import java.util.*;
 
 class cyberMain{
+    String currentURI = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    String ccvt1 = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8";
+    String ccvt3 = "http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8";
+    String ccvt5 = "http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
+    String ccvt6 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
+    String aomen = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
+    String smburl = "smb://MY-PHONE/123/L1eLwX3v.mp4";
+    String smbip = "smb://192.168.137.1/123/L1eLwX3v.mp4";
+
     DeviceList deviceList = null;
     ControlPoint controlPoint = new ControlPoint();
     String TAG = "cyberMain";
@@ -62,7 +71,7 @@ class cyberMain{
         });
     }
 
-    void Request()
+    void ResponeChange()
     {
         controlPoint.addDeviceChangeListener(new DeviceChangeListener() {
             @Override
@@ -78,10 +87,11 @@ class cyberMain{
             public void deviceAdded(Device device) throws MalformedURLException {
                 // 判断是否为DMR
                 log.i(TAG + " deviceAdded " + device.getDeviceType());
-                ShowAll();
                 if ("urn:schemas-upnp-org:device:MediaRenderer:1".equals(device.getDeviceType())) {
                     deviceList.add(device);
+					Play(ccvt1);
                 }
+
             }
         });
     }
@@ -91,14 +101,7 @@ class cyberMain{
         // 实例ID
         String instanceID = "0";
         // 播放视频地址
-        String currentURI = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
-        String ccvt1 = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8";
-        String ccvt3 = "http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8";
-        String ccvt5 = "http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8";
-        String ccvt6 = "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8";
-        String aomen = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
-        String smburl = "smb://MY-PHONE/123/L1eLwX3v.mp4";
-        String smbip = "smb://192.168.137.1/123/L1eLwX3v.mp4";
+
         Device device = deviceList.getDevice(0);
         // 获取服务
         Service service = device.getService("urn:schemas-upnp-org:service:AVTransport:1");
@@ -180,7 +183,7 @@ class cyberMain{
         c.Init();
         c.NotifyListen();
         c.ResponeListen();
-
+        c.ResponeChange();
         c.Search();
         c.ShowAll();
     }
