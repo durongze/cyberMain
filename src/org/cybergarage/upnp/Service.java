@@ -916,7 +916,25 @@ public class Service
 	}
 
 	public void print() {
-		Debug.message(getSID());
+		Debug.message("SID:" + getSID());
+		Debug.message("ServiceType:" + getServiceType());
+		Debug.message("SCPDURL:" + getSCPDURL());
+		Debug.message("ControlURL:" + getControlURL());
+		Debug.message("EventSubURL:" + getEventSubURL());
+		Debug.message("ServiceID:" + getServiceID());
+		Debug.message("DescriptionURL:" + getDescriptionURL());
+
+		SubscriberList subs = getSubscriberList();
+		Debug.message("SubscriberList:" + subs.size());
+		for (int i = 0; i < subs.size(); ++i){
+			subs.getSubscriber(i).print();
+		}
+
+		ActionList acts = getActionList();
+		Debug.message("ActionList:" + acts.size());
+		for (int i = 0; i < acts.size(); ++i){
+			acts.getAction(i).print();
+		}
 	}
 
 }

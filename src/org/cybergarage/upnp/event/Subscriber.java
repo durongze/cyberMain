@@ -20,6 +20,8 @@
 
 package org.cybergarage.upnp.event;
 
+import org.cybergarage.util.Debug;
+
 import java.net.*;
 
 public class Subscriber
@@ -48,7 +50,7 @@ public class Subscriber
 	}
 
 	////////////////////////////////////////////////
-	//	deliveryURL
+	//	ifAddr
 	////////////////////////////////////////////////
 
 	private String ifAddr = "";
@@ -176,5 +178,13 @@ public class Subscriber
 		setSubscriptionTime(System.currentTimeMillis());
 		setNotifyCount(0);
 	}
-
+	public void print()
+	{
+		Debug.message("Subscriber:" );
+		Debug.message("SID:" + SID);
+		Debug.message("ifAddr:" + ifAddr);
+		Debug.message("deliveryURL:" + deliveryURL);
+		Debug.message("host:" + deliveryHost + deliveryPath + deliveryPort);
+		Debug.message("notifyCount:" + notifyCount);
+	}
 }

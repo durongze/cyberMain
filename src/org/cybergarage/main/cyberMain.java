@@ -182,5 +182,6 @@ class cyberMain{
         c.ResponeListen();
 
         c.Search();
+        c.ShowAll();
     }
 }

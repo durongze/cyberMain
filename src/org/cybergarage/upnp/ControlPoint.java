@@ -995,7 +995,7 @@ public class ControlPoint implements HTTPRequestListener
 		Debug.message("Device Num = " + devCnt);
 		for (int n=0; n<devCnt; n++) {
 			Device dev = devList.getDevice(n);
-			Debug.message("[" + n + "] " + dev.getFriendlyName() + ", " + dev.getLeaseTime() + ", " + dev.getElapsedTime());
+			Debug.message("[" + n + "] " + dev.getFriendlyName() + ", LeaseTime " + dev.getLeaseTime() + ", ElapsedTime " + dev.getElapsedTime());
 			dev.print();
 		}		
 	}
